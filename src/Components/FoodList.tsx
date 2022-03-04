@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function Prac() {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState("");
+export default function FoodList() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,5 +19,9 @@ export default function Prac() {
     fetchData();
   },[]);
 
+  const temp = JSON.stringify(data)
+  const temp2 = JSON.parse(temp);
+
   return <div>test</div>
+
 }

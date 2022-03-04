@@ -1,10 +1,10 @@
 import React from 'react';
-import Prac from './Components/Prac';
+import FoodList from './Components/FoodList';
 
 function App() {
   return (
     <div className="App">
-      <Prac />
+      <FoodList />
     </div>
   );
 }
