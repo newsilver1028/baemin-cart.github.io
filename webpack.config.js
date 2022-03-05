@@ -2,6 +2,8 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
 module.exports = {
   entry: {
     // For Typescript
@@ -34,5 +36,6 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
     }),
+    new ForkTsCheckerWebpackPlugin({ silent: true }),
   ],
 };
