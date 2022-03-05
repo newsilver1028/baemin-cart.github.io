@@ -1,39 +1,36 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { STORE, ADD, DELETE, INCREASE, DECREASE } from '../Reducers/cartReducer';
 import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cartReducer';
 import { cartReducer } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
+import FoodsCategories from './FoodsCategories';
 
-export default function FoodList() {
+export default function FoodsList() {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<FoodData>(initialState.foodData);
 
   const { foodData } = useSelector((store: RootState) => store.cartReducer);
-  // console.log(foodData);
+  console.log(foodData);
 
-  const dispatch = useDispatch();
   const onStore = (data: FoodData) => {
     dispatch(cartReducer.actions.STORE(data));
   }
 
   const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get("https://us-central1-react-baemin.cloudfunctions.net/merchantInfo");
-      setData(response.data);
-    } catch (error) {
-      console.log(error)
+    if (!loading) {
+      const response = await axios.get("https://us-central1-react-baemin.cloudfunctions.net/merchantInfo")
+      return response.data;
     }
-    setLoading(false);
+    setLoading(true);
   }
 
   useEffect(() => {
-    fetchData();
+    fetchData()
+    .then((res) => {onStore(res)});
   },[]);
 
-  onStore(data);
-
-  return <div>test</div>;
+  return <div>{foodData.merchant_name}</div>;
 }

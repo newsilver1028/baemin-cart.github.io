@@ -1,10 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios';
 
 export interface Data {
   foodData: FoodData;
-  clickedFood?: object;
+  clickedFoods?: Items[];
   totalPrice?: number;
   isOverMinimum?: boolean;
 }
@@ -37,7 +35,7 @@ export const initialState = {
     items: [],
     discounts: []
   },
-  clickedFood: {},
+  clickedFoods: [],
   totalPrice: 0,
   isOverMinimum: false,
 }
@@ -46,11 +44,12 @@ export const cartReducer = createSlice({
   name: 'cartReducer',
   initialState: initialState as Data,
   reducers: {
-    STORE: (state, action: PayloadAction<FoodData>) => {
-      state.foodData = action.payload;
+    STORE: (state, { payload }: PayloadAction<FoodData>) => {
+      state.foodData = payload;
     },
-    ADD: (state) => {
-      return state;
+    ADD: (state, { payload }: PayloadAction<string>) => {
+      const target = state.foodData.items.filter((item: Items) => item.name === payload);
+      state.clickedFoods?.push(...target);
     },
     DELETE: (state) => {
       return state;

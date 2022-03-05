@@ -1,10 +1,12 @@
 import React from 'react';
-import FoodList from './Components/FoodList';
+import FoodsCategories from './Components/FoodsCategories';
+import FoodsList from './Components/FoodsList';
 
 function App() {
   return (
     <div className="App">
-      <FoodList />
+      <FoodsList />
+      <FoodsCategories />
     </div>
   );
 }
