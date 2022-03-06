@@ -32,8 +32,9 @@ export default function Foods(props: Items) {
   return (
     <div>
       {foodsList.map((food: Items): ReactElement<FoodProps> => {
-        const name = food.name;
-        const price = food.price; // 1000단위 마다 ,를 붙여야 함
+        const {name, price, ..._} = food;
+        // const name = food.name;
+        // const price = food.price; // 1000단위 마다 ,를 붙여야 함
         return <Food key={name} name={name} price={price} onAdd={addCartClickHandler} />
       })}
     </div>

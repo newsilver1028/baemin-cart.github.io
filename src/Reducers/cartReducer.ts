@@ -81,38 +81,22 @@ export const cartReducer = createSlice({
       }
       state.cartData?.storedFoods.push(targetObject);
       state.count++;
-      // if(state.cartData !== undefined) {
-      //   state.cartData.totalPrice = state.cartData.storedFoods.reduce(
-      //     (prev, current) => prev + current.priceTimesQuantity,0);
-      //   state.cartData.isOverMinimum = state.foodData.minimum_order_price <= state.cartData.totalPrice;
-      // }
     },
     DELETE: (state, { payload }: PayloadAction<string>) => {
       if (state.cartData !== undefined) {
         state.cartData.storedFoods = state.cartData.storedFoods.filter((item:StoredFoods) => item.name !== payload);
-        // state.cartData.isOverMinimum = state.foodData.minimum_order_price <= state.cartData.totalPrice!;
       }
     },
     INCREASE: (state, { payload }: PayloadAction<string>) => {
       const target = state.cartData?.storedFoods.filter((item:StoredFoods) => item.name === payload)[0] !;
       target.quantitiy++;
       target.priceTimesQuantity = target.price * target.quantitiy;
-      // if (state.cartData !== undefined) {
-      //   state.cartData.totalPrice = state.cartData.storedFoods.reduce(
-      //     (prev, current) => prev + current.priceTimesQuantity,0);
-      //   state.cartData.isOverMinimum = state.foodData.minimum_order_price <= state.cartData.totalPrice;
-      // }
     },
     DECREASE: (state, { payload }: PayloadAction<string>) => {
       const target = state.cartData?.storedFoods.filter((item:StoredFoods) => item.name === payload)[0] !;
       if (target.quantitiy === 1) return;
       target.quantitiy--;
       target.priceTimesQuantity = target.price * target.quantitiy;
-      // if (state.cartData !== undefined) {
-      //   state.cartData.totalPrice = state.cartData.storedFoods.reduce(
-      //     (prev, current) => prev + current.priceTimesQuantity,0);
-      //   state.cartData.isOverMinimum = state.foodData.minimum_order_price <= state.cartData.totalPrice;
-      // }
     }
   }
 });
