@@ -14,15 +14,19 @@ export default function CartFood(props: CartFoodProps): ReactElement {
 
   const onIncrease = (target: string): void => {
     dispatch(cartReducer.actions.INCREASE(target));
+    dispatch(cartReducer.actions.UPDATE());
   } 
 
   const onDecrease = (target: string): void => {
     dispatch(cartReducer.actions.DECREASE(target));
+    dispatch(cartReducer.actions.UPDATE());
   }
 
   const onDelete = (target: string): void => {
     dispatch(cartReducer.actions.DELETE(target));
+    dispatch(cartReducer.actions.UPDATE());
   }
+
   console.log(cartData)
 
   return (
