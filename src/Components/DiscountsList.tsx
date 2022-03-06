@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { cartReducer } from '../Reducers/cartReducer';
 import { CartData, StoredFoods, Items, initialState, Discounts } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
-import DiscountsRate from './DiscountsRate';
+import DiscountsElement from './DiscountsElement';
 
 export default function DiscountsList() {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export default function DiscountsList() {
   const discountsList = foodData.discounts;
   const $discountsArray = discountsList.map((discount: Discounts): JSX.Element => {
     const {id, name, discount_rate} = discount;
-    return <DiscountsRate key={id} name={name} discount_rate={discount_rate}/>
+    return <DiscountsElement key={id} name={name} discount_rate={discount_rate}/>
   });
 
   return (
