@@ -1,33 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchFoodData } from '../Async/fetchFoodData';
 
-import { FoodData } from './cartReducer';
+import { Discounts } from './cartReducer';
 
 export interface InitialFoodData {
-  foodData: FoodData,
+  foodData : {
+    discounts: Discounts[]
+  },
   isLoading: boolean,
   error?: unknown
 }
 
 const initialState = {
   foodData: {
-    minimum_order_price: 0,
-    merchant_name: "",
-    items: [],
     discounts: []
   },
   isLoading: false,
   error: []
 }
 
-export const foodDataReducer = createSlice({
+export const discountsDataReducer = createSlice({
   name: 'foodDataReducer',
   initialState: initialState as InitialFoodData,
-  reducers: {
-    // STORE: (state, { payload }: PayloadAction<FoodData>) => {
-    //   state.foodData = payload;
-    // }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchFoodData.pending, (state) => {
       state.isLoading = true;

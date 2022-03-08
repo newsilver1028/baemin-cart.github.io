@@ -10,18 +10,14 @@ import { discountReducer } from '../Reducers/discountReducer';
 export default function Foods(props: { foodsList: Items[]}) {
   const dispatch = useDispatch();
   const foodsList = props.foodsList;
-
-  const { foodData } = useSelector((store: RootState) => store.cartReducer);
   const { cartData } = useSelector((store: RootState) => store.cartReducer);
   const storedFoods = cartData.storedFoods;
 
   const onAdd = (target: string) => {
     dispatch(cartReducer.actions.ADD(target));
-    // dispatch(discountReducer.actions.UPDATE(storedFoods));
+    dispatch(cartReducer.actions.UPDATE());
+    dispatch(discountReducer.actions.ADD(storedFoods));
   } 
-  const onUpdate = (storedFoods: StoredFoods[]) => {
-    dispatch(discountReducer.actions.UPDATE(storedFoods));
-  }
 
   function addCartClickHandler(event: React.MouseEventHandler<HTMLDivElement>): void {
     const target = event.target.id;
@@ -30,8 +26,8 @@ export default function Foods(props: { foodsList: Items[]}) {
       alert("이미 장바구니에 등록된 상품입니다.");
       return;
     }
+    // onUpdate(storedFoods);
     onAdd(target);
-    onUpdate(storedFoods);
   }
   
   return (

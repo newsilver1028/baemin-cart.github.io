@@ -1,8 +1,17 @@
-import { DiscountsRateProps } from "./DiscountsList"
+import { useState } from "react";
 import DiscountsMenu from "./DiscountsMenu";
 
-export default function DiscountsElement(props: DiscountsRateProps) {
+export default function DiscountsElement(props: {id:string, name: string, discountRate: number}) {
   const {id, name, discountRate} = props;
+  const [isOpen, setIsOpen] = useState(false);
+
+  function selectButtonClickHandler(event: any): void {
+    if(isOpen) {
+      setIsOpen(false);
+      return;
+    }
+    setIsOpen(true);
+  }
 
   return (
     <>
@@ -10,9 +19,13 @@ export default function DiscountsElement(props: DiscountsRateProps) {
     <input type="checkbox" />
     <span>{name}</span>
     <span>{discountRate} %</span>
-    <button type="button">메뉴 선택</button>
+    <button type="button" 
+    value={name} 
+    onClick={selectButtonClickHandler}
+    >메뉴 선택</button>
     </div>
-    <DiscountsMenu name={name}/>
+    {/* {isOpen && <DiscountsMenu id={id} name={name}/>} */}
+    <DiscountsMenu id={id} name={name}/>
     </>
   )
 }

@@ -63,13 +63,17 @@ export const cartReducer = createSlice({
   reducers: {
     STORE: (state, { payload }: PayloadAction<FoodData>) => {
       state.foodData = payload;
+      state.count = 0;
+      state.cartData = {
+        storedFoods: [],
+        totalPrice: 0,
+        isOverMinimum: false
+      }
     },
     UPDATE: (state) => {
-      if(state.cartData !== undefined) {
-        state.cartData.totalPrice = state.cartData.storedFoods.reduce(
-          (prev, current) => prev + current.priceTimesQuantity,0);
-        state.cartData.isOverMinimum = state.foodData.minimum_order_price <= state.cartData.totalPrice;
-      }
+      state.cartData!.totalPrice = state.cartData!.storedFoods.reduce(
+        (prev, current) => prev + current.priceTimesQuantity,0);
+      state.cartData!.isOverMinimum = state.foodData.minimum_order_price <= state.cartData!.totalPrice;
     },
     ADD: (state, { payload }: PayloadAction<string>) => {
       const target = state.foodData.items.filter((item: Items) => item.name === payload)[0];

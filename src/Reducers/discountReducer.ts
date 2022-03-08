@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CartData, StoredFoods } from './cartReducer';
+import { FoodData, StoredFoods } from './cartReducer';
 
 export interface DiscountsData {
   discounts: Discounts[];
   totalPrice?: number;
+  storedFoods?: StoredFoods[]
 }
 
 export interface Discounts {
@@ -38,8 +39,9 @@ export const discountReducer = createSlice({
   name: 'discountReducer',
   initialState: initialState as DiscountsData,
   reducers: {
-    STORE: (state, { payload }: PayloadAction<Discounts[]>) => {
-      state.discounts = payload.map(discount => {
+    STORE: (state, { payload }: PayloadAction<FoodData>) => {
+      const data = payload.discounts;
+      state.discounts = data.map((discount: Discounts) => {
         return {
           ...discount,
           discountedMenu: [],
@@ -48,19 +50,39 @@ export const discountReducer = createSlice({
       })
     },
     UPDATE: (state, { payload }: PayloadAction<StoredFoods[]>) => {
-      state.discounts.forEach((discount) => {
-        payload.forEach((food) => {
+      state.storedFoods = payload;
+      state.discounts = state.discounts.map((discount) => {
+        discount.discountedMenu = state.storedFoods!.map(food => {
+          const discountedPrice = getDiscountedPrice(food.priceTimesQuantity,discount.discount_rate);
+          const excludedPrice = getExcludedPrice(food.priceTimesQuantity, discountedPrice);
+          discount.discountedPrices! += discountedPrice;
+          return {
+            name: food.name,
+            discountedPrice: discountedPrice,
+            excludedPrice: excludedPrice
+          }
+        });
+        return discount;
+
+      })
+
+    },
+    ADD: (state, { payload }: PayloadAction<StoredFoods[]>) => {
+      state.storedFoods = payload;
+      state.discounts = state.discounts.map((discount) => {
+        state.storedFoods!.forEach((food) => {
           const discountedPrice = getDiscountedPrice(food.priceTimesQuantity,discount.discount_rate);
           const excludedPrice = getExcludedPrice(food.priceTimesQuantity, discountedPrice);
           const menuObject = {
             name: food.name,
             discountedPrice: discountedPrice,
             excludedPrice: excludedPrice
-          }          
-          discount.discountedMenu!.push(menuObject);
+          }
+          discount.discountedMenu!.push(menuObject);   
           discount.discountedPrices! += discountedPrice;
-        })
+        });
+        return discount;
       })
     }
-  }
+  },
 });
