@@ -1,22 +1,18 @@
-import { FunctionComponent, ReactElement } from 'react';
 import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cartReducer';
 import Foods from './Foods';
+import { FoodsTypeProps } from './FoodsCategories';
 
-export default function FoodsType(props: object) {
+export default function FoodsType(props: FoodsTypeProps[]) {
   const SORTED_FOODS = props.list;
 
   return(
     <>
     <div>
-      {SORTED_FOODS.map(([type,foods]:[string, Items]) :ReactElement => {
+      {SORTED_FOODS.map(([type,foods]:[string, Items[]]): JSX.Element => {
         return (
           <div key={type}>
             종류 : {type}
             <Foods key={type} foodsList={foods}/>
-            {/* {foods.map((food:Items): ReactElement => {
-              const name = food.name;
-              return <div key={name}>{food.name}</div>
-            })} */}
           </div>
         ); 
       })}

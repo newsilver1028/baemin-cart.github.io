@@ -10,19 +10,16 @@ export default function DiscountsList() {
   const { foodData } = useSelector((store: RootState) => store.cartReducer);
   const discountsList = foodData.discounts;
   const $discountsArray = discountsList.map((discount: Discounts): JSX.Element => {
-    const {id, name, discount_rate} = discount;
-    return <DiscountsElement key={id} name={name} discount_rate={discount_rate}/>
+    const {id, name, ..._} = discount;
+    return <DiscountsElement key={id} id={id} name={name} />
   });
 
   return (
     <>
     <div>====== Discounts ======</div>
     <div>{$discountsArray}</div>
+    <div>test</div>
     </>
   )
 }
 
-export interface DiscountsRateProps {
-  name: string;
-  discount_rate: number;
-}

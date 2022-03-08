@@ -1,11 +1,7 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { STORE, ADD, DELETE, INCREASE, DECREASE } from '../Reducers/cartReducer';
 import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cartReducer';
-import { cartReducer } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
-import Food from './FoodsType';
-import { ComponentElement, ComponentType, FunctionComponent, JSXElementConstructor, ReactElement } from 'react';
 import FoodsType from './FoodsType';
 
 export default function FoodsCategories() {
@@ -26,4 +22,9 @@ export default function FoodsCategories() {
     <FoodsType list={SORTED_FOODS} />
     </>
   )
+}
+
+export interface FoodsTypeProps {
+  type: string;
+  foodsList: Items[]
 }

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Data {
   foodData: FoodData;
-  count: number;
+  count?: number;
   cartData?: CartData;
 }
 
@@ -80,7 +80,7 @@ export const cartReducer = createSlice({
         priceTimesQuantity: target.price
       }
       state.cartData?.storedFoods.push(targetObject);
-      state.count++;
+      state.count!++;
     },
     DELETE: (state, { payload }: PayloadAction<string>) => {
       if (state.cartData !== undefined) {

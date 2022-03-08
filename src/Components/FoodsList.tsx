@@ -1,35 +1,38 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cartReducer';
 import { cartReducer } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
 
+// get discountsData
+import { discountReducer } from '../Reducers/discountReducer';
+
+// thunk 
+import { fetchFoodData } from '../Async/fetchFoodData';
+import { unwrapResult } from '@reduxjs/toolkit';
+
 export default function FoodsList() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const { foodData } = useSelector((store: RootState) => store.cartReducer);
+  const { foodData } = useSelector((store: RootState) => store.foodDataReducer);
   const { count } = useSelector((store: RootState) => store.cartReducer);
-  // console.log(foodData);
 
   const onStore = (data: FoodData) => {
+    // dispatch(fetchFoodData());
     dispatch(cartReducer.actions.STORE(data));
+    // get discountsData
+    dispatch(discountReducer.actions.STORE(data.discounts));
   }
 
-  const fetchData = async () => {
-    if (!loading) {
-      const response = await axios.get("https://us-central1-react-baemin.cloudfunctions.net/merchantInfo")
-      return response.data;
+  const getFoodData = async () => {
+    try{
+    await dispatch(fetchFoodData());
+    await onStore(foodData);
+    } catch(error) {
+      console.log(error);
     }
-    setLoading(true);
   }
 
-  useEffect(() => {
-    fetchData()
-    .then((res) => {onStore(res)});
-  },[]);
+  getFoodData();
 
   return (
     <>

@@ -1,16 +1,18 @@
 import { DiscountsRateProps } from "./DiscountsList"
 import DiscountsMenu from "./DiscountsMenu";
 
-export default function DiscountsElemen(props: DiscountsRateProps) {
-  const {name, discount_rate} = props;
+export default function DiscountsElement(props: DiscountsRateProps) {
+  const {id, name, discountRate} = props;
 
   return (
-    <div>
+    <>
+    <div id={id}>
     <input type="checkbox" />
     <span>{name}</span>
-    <span>{discount_rate} %</span>
+    <span>{discountRate} %</span>
     <button type="button">메뉴 선택</button>
-    <DiscountsMenu />
     </div>
+    <DiscountsMenu name={name}/>
+    </>
   )
 }

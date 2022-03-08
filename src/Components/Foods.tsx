@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { ReactElement } from 'react';
 
-import { cartReducer } from '../Reducers/cartReducer';
+import { cartReducer, StoredFoods } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
 import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cartReducer';
 import Food from './Food';
+import { discountReducer } from '../Reducers/discountReducer';
 
-export default function Foods(props: Items) {
+export default function Foods(props: { foodsList: Items[]}) {
   const dispatch = useDispatch();
   const foodsList = props.foodsList;
 
@@ -16,7 +17,11 @@ export default function Foods(props: Items) {
 
   const onAdd = (target: string) => {
     dispatch(cartReducer.actions.ADD(target));
+    // dispatch(discountReducer.actions.UPDATE(storedFoods));
   } 
+  const onUpdate = (storedFoods: StoredFoods[]) => {
+    dispatch(discountReducer.actions.UPDATE(storedFoods));
+  }
 
   function addCartClickHandler(event: React.MouseEventHandler<HTMLDivElement>): void {
     const target = event.target.id;
@@ -26,9 +31,9 @@ export default function Foods(props: Items) {
       return;
     }
     onAdd(target);
+    onUpdate(storedFoods);
   }
   
-
   return (
     <div>
       {foodsList.map((food: Items): ReactElement<FoodProps> => {
