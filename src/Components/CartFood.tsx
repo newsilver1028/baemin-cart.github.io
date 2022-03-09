@@ -3,7 +3,6 @@ import { ReactElement } from "react"
 
 import { cartReducer } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
-import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cartReducer';
 import { CartFoodProps } from "./CartList"
 import { discountReducer } from '../Reducers/discountReducer';
 

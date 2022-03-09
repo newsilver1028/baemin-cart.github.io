@@ -1,13 +1,11 @@
-import FoodsCategories from './FoodsCategories';
-import FoodsList from './FoodsList';
-import Cart from './CartList';
+import CartBox from './CartBox';
+import FoodsListBox from './FoodsListBox';
 
 export default function Box() {
   return (
     <>
-    <FoodsList />
-    <FoodsCategories />
-    <Cart />
+    <FoodsListBox />
+    <CartBox />
     </>
   )
 }

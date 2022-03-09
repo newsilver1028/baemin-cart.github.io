@@ -5,7 +5,7 @@ export default function DiscountsElement(props: {id:string, name: string, discou
   const {id, name, discountRate} = props;
   const [isOpen, setIsOpen] = useState(false);
 
-  function selectButtonClickHandler(event: any): void {
+  function selectButtonClickHandler(): void {
     if(isOpen) {
       setIsOpen(false);
       return;
@@ -20,8 +20,8 @@ export default function DiscountsElement(props: {id:string, name: string, discou
     <span>{name}</span>
     <span>{discountRate} %</span>
     <button type="button" 
-    value={name} 
-    onClick={selectButtonClickHandler}
+      value={name} 
+      onClick={selectButtonClickHandler}
     >메뉴 선택</button>
     </div>
     {/* {isOpen && <DiscountsMenu id={id} name={name}/>} */}

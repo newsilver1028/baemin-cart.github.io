@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { CartData, StoredFoods, Items, initialState, Discounts } from '../Reducers/cartReducer';
+import { Discounts } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
 import DiscountsElement from './DiscountsElement';
 
@@ -14,7 +14,7 @@ export default function DiscountsList() {
 
   return (
     <>
-    <div>====== Discounts ======</div>
+    <span>할인</span>
     <div>{$discountsArray}</div>
     </>
   )
