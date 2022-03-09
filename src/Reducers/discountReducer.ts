@@ -1,26 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FoodData, StoredFoods } from './cartReducer';
-
-export interface DiscountsData {
-  discounts: Discounts[];
-  totalPrice?: number;
-  storedFoods?: StoredFoods[]
-}
-
-export interface Discounts {
-  id: string;
-  name: string;
-  discount_rate: number;
-  discountedMenu?: DiscountedMenu[];
-  discountedPrices?: number;
-}
-
-export interface DiscountedMenu {
-  name: string;
-  discountedPrice: number;
-  excludedPrice: number;
-}
+import { DiscountsData, Discounts } from '../Interface/discountInterface'
+import { FoodData, StoredFoods } from '../Interface/cartInterface';
 
 export const initialState = {
   discounts: [],

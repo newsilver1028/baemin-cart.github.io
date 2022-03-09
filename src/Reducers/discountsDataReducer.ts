@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchFoodData } from '../Async/fetchFoodData';
 
-import { Discounts } from './cartReducer';
+import { Discounts } from '../Interface/cartInterface';
 
 export interface InitialFoodData {
   foodData : {

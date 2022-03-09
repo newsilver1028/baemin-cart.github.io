@@ -1,28 +1,21 @@
 import { useSelector } from 'react-redux';
 
-import { Items } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
 import FoodsType from './FoodsType';
+import { FoodsTypeProps } from '../Reducers/foodDataReducer';
 
 export default function FoodsCategories() {
-  const { foodData } = useSelector((store: RootState) => store.cartReducer);
-  const foodItems = foodData.items;
-  const foodItemsNameArray  = foodItems.map((item: Items) :string=> {
-    return item.category_name;
-  });
-  const FOODS_TYPES = Array.from(new Set([...foodItemsNameArray]));
+  const { sortedFoodsData } = useSelector((store: RootState) => store.foodDataReducer);
 
-  const SORTED_FOODS = FOODS_TYPES.map((type:string) : [string,Items[]]=> {
-    const FOODS_LIST= foodItems.filter((item: Items) => item.category_name === type) 
-    return [type,FOODS_LIST];
+  const $sortedFoodsArray = sortedFoodsData.map(({type, foodList}: FoodsTypeProps): JSX.Element=> {
+    return <FoodsType type={type} foodList={foodList} />
   });
-  console.log(SORTED_FOODS)
 
   return (
     <>
-    <FoodsType list={SORTED_FOODS} />
+    {$sortedFoodsArray}
     </>
   )
 }
 
-export type FoodsTypeProps = [string, Items[]];
+

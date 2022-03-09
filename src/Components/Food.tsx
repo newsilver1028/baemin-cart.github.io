@@ -20,7 +20,7 @@ export default function Food(props: FoodProps): ReactElement {
     dispatch(discountReducer.actions.ADD(storedFoods));
   } 
 
-  function addCartClickHandler(event: React.MouseEventHandler<HTMLDivElement>): void {
+  function addCartClickHandler(event: any): void {
     const target = event.target.id;
     const isOverlapped = storedFoods.filter((item: Items) => item.name === target).length !== 0;
     if (isOverlapped) {

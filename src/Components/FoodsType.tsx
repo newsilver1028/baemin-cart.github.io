@@ -2,23 +2,14 @@ import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cart
 import Foods from './Foods';
 import { FoodsTypeProps } from './FoodsCategories';
 
-export default function FoodsType(props: { list: FoodsTypeProps[] }) {
-  const SORTED_FOODS = props.list;
+export default function FoodsType(props: FoodsTypeProps ) {
+  const {type, foodList} = props;
 
   return(
     <>
     <div>
-      {SORTED_FOODS.map((food:FoodsTypeProps): JSX.Element => {
-        const [type, foods] = food;
-        return (
-          <div key={type}>
-            <div>
-            종류 : {type}
-            </div>
-            <Foods key={type} foodsList={foods}/>
-          </div>
-        ); 
-      })}
+      <div>종류 : {type}</div>
+      <Foods foodsList={foodList}/>
     </div>
     </>
   )

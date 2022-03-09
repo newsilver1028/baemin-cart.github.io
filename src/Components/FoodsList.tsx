@@ -1,11 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-import { cartReducer } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
+import { cartReducer } from '../Reducers/cartReducer';
 import { discountReducer } from '../Reducers/discountReducer';
+import { foodDataReducer } from '../Reducers/foodDataReducer';
 import { fetchFoodData } from '../Async/fetchFoodData';
 import { useAppThunkDispatch } from '..';
+
 
 export default function FoodsList() {
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ export default function FoodsList() {
     .unwrap()
     .then((data) => {
       dispatch(cartReducer.actions.STORE(data));
+      dispatch(foodDataReducer.actions.STORE());
     })
     .catch((reject) => {
       console.log(reject);

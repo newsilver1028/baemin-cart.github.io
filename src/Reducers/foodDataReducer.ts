@@ -1,13 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchFoodData } from '../Async/fetchFoodData';
 
-import { FoodData } from './cartReducer';
-
-export interface InitialFoodData {
-  foodData: FoodData,
-  isLoading: boolean,
-  error?: unknown
-}
+import { Items } from '../Interface/cartInterface';
+import { InitialFoodData } from '../Interface/foodDataInterface';
+import { FoodsTypeProps } from '../Interface/foodDataInterface';
 
 const initialState = {
   foodData: {
@@ -16,6 +12,7 @@ const initialState = {
     items: [],
     discounts: []
   },
+  sortedFoodsData: [],
   isLoading: false,
   error: []
 }
@@ -24,9 +21,19 @@ export const foodDataReducer = createSlice({
   name: 'foodDataReducer',
   initialState: initialState as InitialFoodData,
   reducers: {
-    // STORE: (state, { payload }: PayloadAction<FoodData>) => {
-    //   state.foodData = payload;
-    // }
+    STORE: (state) => {
+      const foodItemsNameArray = state.foodData.items.map((item: Items) :string=> {
+        return item.category_name;
+      });
+      const FOODS_TYPES = Array.from(new Set([...foodItemsNameArray]));
+      state.sortedFoodsData = FOODS_TYPES.map((type:string) : FoodsTypeProps => {
+        const FOODS_LIST = state.foodData.items.filter((item: Items) => item.category_name === type) 
+        return {
+          type: type,
+          foodList: FOODS_LIST
+        }
+      });
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchFoodData.pending, (state) => {
