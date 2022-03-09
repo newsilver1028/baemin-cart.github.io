@@ -4,6 +4,8 @@ import { ReactElement } from "react"
 import { cartReducer } from '../Reducers/cartReducer';
 import { CartFoodProps } from "./CartList"
 
+import { Text } from '@chakra-ui/react';
+
 export default function CartFood(props: CartFoodProps): ReactElement {
   const {name, price, quantitiy } = props;
   const dispatch = useDispatch();
@@ -22,8 +24,8 @@ export default function CartFood(props: CartFoodProps): ReactElement {
 
   return (
     <>
-    <div id={name}>{name}</div>
-    <div id={name}>{price}</div>
+    <Text id={name} fontSize="lg" fontWeight="semibold">{name}</Text>
+    <Text id={name+"price"} as="sub" fontSize="md" color="darkgray">₩{price}</Text>
     <div id={name} onClick={() => onDelete(name)}>X</div>
     <button type="button" onClick={() => onDecrease(name)}>-</button>
     <span>{quantitiy}</span>

@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux'
 
 import { RootState } from '../Reducers';
-import { Discounts } from '../Reducers/cartReducer';
+import { Discounts } from '../Interface/discountInterface';
+
+import { Text } from '@chakra-ui/react';
 
 export default function DiscountsMenu(props: { id: string; name: string }) {
   const { discounts } = useSelector((store: RootState) => store.discountReducer);
@@ -12,8 +14,8 @@ export default function DiscountsMenu(props: { id: string; name: string }) {
     const {name, _, excludedPrice } = el;
     return (
     <div key={id+name}>
-      <span>{name}</span>
-      <span>{excludedPrice}</span>
+      <Text fontSize="lg" fontWeight="semibold">{name}</Text>
+      <Text as="sub" fontSize="sm" color="red">- ₩{excludedPrice}</Text>
     </div>);
   })
 

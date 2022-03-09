@@ -1,16 +1,15 @@
-import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cartReducer';
 import Foods from './Foods';
-import { FoodsTypeProps } from './FoodsCategories';
+import { FoodsTypeProps } from '../Interface/foodDataInterface';
+
+import { Text } from '@chakra-ui/react'
 
 export default function FoodsType(props: FoodsTypeProps ) {
   const {type, foodList} = props;
 
   return(
-    <>
     <div>
-      <div>종류 : {type}</div>
+      <Text fontSize="xl" fontWeight="semibold">{type}</Text>
       <Foods foodsList={foodList}/>
     </div>
-    </>
   )
 }

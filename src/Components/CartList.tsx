@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import { ReactElement } from 'react';
-import { StoredFoods } from '../Reducers/cartReducer';
+import { StoredFoods } from '../Interface/cartInterface';
 import { RootState } from '../Reducers';
 import CartFood from './CartFood';
 

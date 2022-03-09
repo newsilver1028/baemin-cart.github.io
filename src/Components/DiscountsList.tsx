@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
 
-import { Discounts } from '../Reducers/cartReducer';
+import { Discounts } from '../Interface/discountInterface';
 import { RootState } from '../Reducers';
 import DiscountsElement from './DiscountsElement';
+
+import { Text } from '@chakra-ui/react'
 
 export default function DiscountsList() {
   const { foodData } = useSelector((store: RootState) => store.cartReducer);
@@ -14,7 +16,7 @@ export default function DiscountsList() {
 
   return (
     <>
-    <span>할인</span>
+    <Text fontSize="2xl"><b>할인</b></Text>
     <div>{$discountsArray}</div>
     </>
   )

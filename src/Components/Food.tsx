@@ -8,6 +8,8 @@ import { RootState } from '../Reducers';
 import { Items, StoredFoods } from '../Interface/cartInterface';
 import { discountReducer } from '../Reducers/discountReducer';
 
+import { Text } from '@chakra-ui/react';
+
 export default function Food(props: FoodProps): ReactElement {
   const {name, price} = props;
   const dispatch = useDispatch();
@@ -25,13 +27,12 @@ export default function Food(props: FoodProps): ReactElement {
   }
 
   function addCartClickHandler(event: any): void {
-    const target = event.target.id;
-    const isOverlapped = storedFoods.filter((item: Items) => item.name === target).length !== 0;
+    const isOverlapped = storedFoods.filter((item: Items) => item.name === name).length !== 0;
     if (isOverlapped) {
       alert("이미 장바구니에 등록된 상품입니다.");
       return;
     }
-    onAdd(target);
+    onAdd(name);
   }
 
   useEffect(() => {
@@ -40,8 +41,8 @@ export default function Food(props: FoodProps): ReactElement {
   
   return (
     <div>
-    <span id={name} onClick={addCartClickHandler}>{name} : </span>
-    <span id={name+"price"}>{price}</span>
+    <Text id={name} fontSize="lg" fontWeight="semibold" onClick={addCartClickHandler}>{name}</Text>
+    <Text id={name+"price"} as="sub" fontSize="sm" color="darkgray">₩{price}</Text>
     </div>
   )
 }
