@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { ReactElement } from 'react';
 
-import { cartReducer, StoredFoods } from '../Reducers/cartReducer';
+import { cartReducer } from '../Reducers/cartReducer';
 import { RootState } from '../Reducers';
-import { Data, FoodData, Discounts, Items, initialState } from '../Reducers/cartReducer';
+import { Items } from '../Reducers/cartReducer';
 import Food from './Food';
 import { discountReducer } from '../Reducers/discountReducer';
 
-export default function Foods(props: { foodsList: Items[]}) {
+export default function Foods(props: { foodsList: Items[] }) {
   const dispatch = useDispatch();
   const foodsList = props.foodsList;
   const { cartData } = useSelector((store: RootState) => store.cartReducer);
@@ -26,7 +26,6 @@ export default function Foods(props: { foodsList: Items[]}) {
       alert("이미 장바구니에 등록된 상품입니다.");
       return;
     }
-    // onUpdate(storedFoods);
     onAdd(target);
   }
   
@@ -34,8 +33,6 @@ export default function Foods(props: { foodsList: Items[]}) {
     <div>
       {foodsList.map((food: Items): ReactElement<FoodProps> => {
         const {name, price, ..._} = food;
-        // const name = food.name;
-        // const price = food.price; // 1000단위 마다 ,를 붙여야 함
         return <Food key={name} name={name} price={price} onAdd={addCartClickHandler} />
       })}
     </div>
@@ -47,4 +44,3 @@ export interface FoodProps {
   price: number;
   onAdd: React.MouseEventHandler<HTMLDivElement>;
 }
-

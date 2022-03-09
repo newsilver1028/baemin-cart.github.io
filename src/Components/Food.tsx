@@ -5,9 +5,9 @@ export default function Food(props: FoodProps): ReactElement {
   const {name, price, onAdd} = props;
   
   return (
-    <>
-    <div id={name} onClick={onAdd}>{name}</div>
-    <div id={name}>{price}</div>
-    </>
+    <div>
+    <span id={name} onClick={onAdd}>{name} : </span>
+    <span id={name+"price"}>{price}</span>
+    </div>
   )
 }
