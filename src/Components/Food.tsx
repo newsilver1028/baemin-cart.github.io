@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { FoodProps } from './Foods';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,8 +32,11 @@ export default function Food(props: FoodProps): ReactElement {
       return;
     }
     onAdd(target);
-    onUpdate(storedFoods);
   }
+
+  useEffect(() => {
+    onUpdate(storedFoods);
+  },[storedFoods]);
   
   return (
     <div>
