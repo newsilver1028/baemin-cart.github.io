@@ -6,14 +6,7 @@ import { FoodData, StoredFoods } from '../Interface/cartInterface';
 export const initialState = {
   discounts: [],
   totalPrice: 0,
-}
-
-function getDiscountedPrice(price: number, rate: number): number {
-  return Math.floor((100 - rate) * 0.01 * price);
-}
-
-function getExcludedPrice(totalPrice: number, discountedPrice: number): number {
-  return Math.floor(totalPrice - discountedPrice);
+  storedFoods: []
 }
 
 export const discountReducer = createSlice({
@@ -26,14 +19,15 @@ export const discountReducer = createSlice({
         return {
           ...discount,
           discountedMenu: [],
-          discountedPrices: 0
+          discountedPrices: 0,
+          selectedMenu: []
         }
       })
     },
     UPDATE: (state, { payload }: PayloadAction<StoredFoods[]>) => {
       state.storedFoods = payload;
       state.discounts = state.discounts.map((discount) => {
-        discount.discountedMenu = state.storedFoods!.map(food => {
+        discount.discountedMenu = payload.map(food => {
           const discountedPrice = getDiscountedPrice(food.priceTimesQuantity,discount.discount_rate);
           const excludedPrice = getExcludedPrice(food.priceTimesQuantity, discountedPrice);
           discount.discountedPrices! += discountedPrice;
@@ -44,14 +38,12 @@ export const discountReducer = createSlice({
           }
         });
         return discount;
-
       })
-
     },
     ADD: (state, { payload }: PayloadAction<StoredFoods[]>) => {
       state.storedFoods = payload;
       state.discounts = state.discounts.map((discount) => {
-        state.storedFoods!.forEach((food) => {
+        payload.forEach((food) => {
           const discountedPrice = getDiscountedPrice(food.priceTimesQuantity,discount.discount_rate);
           const excludedPrice = getExcludedPrice(food.priceTimesQuantity, discountedPrice);
           const menuObject = {
@@ -67,3 +59,11 @@ export const discountReducer = createSlice({
     }
   },
 });
+
+function getDiscountedPrice(price: number, rate: number): number {
+  return Math.floor((100 - rate) * 0.01 * price);
+}
+
+function getExcludedPrice(totalPrice: number, discountedPrice: number): number {
+  return Math.floor(totalPrice - discountedPrice);
+}

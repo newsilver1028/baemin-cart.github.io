@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Data, FoodData, CartData, StoredFoods, Items, Discounts } from '../Interface/cartInterface';
+import { Data, FoodData, StoredFoods, Items } from '../Interface/cartInterface';
 
 export const initialState = {
   foodData: {
@@ -45,7 +45,7 @@ export const cartReducer = createSlice({
         price: target.price,
         priceTimesQuantity: target.price
       }
-      state.cartData?.storedFoods.push(targetObject);
+      state.cartData!.storedFoods.push(targetObject);
       state.count!++;
     },
     DELETE: (state, { payload }: PayloadAction<string>) => {
@@ -54,15 +54,22 @@ export const cartReducer = createSlice({
       }
     },
     INCREASE: (state, { payload }: PayloadAction<string>) => {
-      const target = state.cartData?.storedFoods.filter((item:StoredFoods) => item.name === payload)[0] !;
-      target.quantitiy++;
-      target.priceTimesQuantity = target.price * target.quantitiy;
+      state.cartData!.storedFoods = state.cartData!.storedFoods.map((food) => {
+        if(food.name === payload) {
+          food.quantitiy++;
+          food.priceTimesQuantity = food.price * food.quantitiy;
+        }
+        return food;
+      });
     },
     DECREASE: (state, { payload }: PayloadAction<string>) => {
-      const target = state.cartData?.storedFoods.filter((item:StoredFoods) => item.name === payload)[0] !;
-      if (target.quantitiy === 1) return;
-      target.quantitiy--;
-      target.priceTimesQuantity = target.price * target.quantitiy;
+      state.cartData!.storedFoods = state.cartData!.storedFoods.map((food) => {
+        if(food.name === payload) {
+          food.quantitiy--;
+          food.priceTimesQuantity = food.price * food.quantitiy;
+        }
+        return food;
+      });
     }
   }
 });

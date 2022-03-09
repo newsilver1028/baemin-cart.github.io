@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { Items } from '../Reducers/cartReducer';
+import { Items } from '../Interface/cartInterface';
 import Food from './Food';
 
 export default function Foods(props: { foodsList: Items[] }) {

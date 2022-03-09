@@ -16,31 +16,53 @@ export default function CartFood(props: CartFoodProps): ReactElement {
   const onIncrease = (target: string): void => {
     dispatch(cartReducer.actions.INCREASE(target));
     dispatch(cartReducer.actions.UPDATE());
-    dispatch(discountReducer.actions.UPDATE(storedFoods));
+    // dispatch(discountReducer.actions.UPDATE(storedFoods));
   } 
+  const temp = () => {
+    console.log(storedFoods);
+    dispatch(discountReducer.actions.UPDATE(storedFoods));
+  }
 
   const onDecrease = (target: string): void => {
     dispatch(cartReducer.actions.DECREASE(target));
     dispatch(cartReducer.actions.UPDATE());
-    dispatch(discountReducer.actions.UPDATE(storedFoods));
+    // dispatch(discountReducer.actions.UPDATE(storedFoods));
   }
 
   const onDelete = (target: string): void => {
     dispatch(cartReducer.actions.DELETE(target));
     dispatch(cartReducer.actions.UPDATE());
+    // dispatch(discountReducer.actions.UPDATE(storedFoods));
+  }
+
+  function deleteButtonClickHandler() {
+    onDelete(name);
+    // dispatch(cartReducer.actions.UPDATE());
     dispatch(discountReducer.actions.UPDATE(storedFoods));
   }
 
-  console.log(cartData)
+  function increaseButtonClickHandler() {
+    onIncrease(name);
+    // dispatch(cartReducer.actions.UPDATE());
+    // console.log(storedFoods);
+    // dispatch(discountReducer.actions.UPDATE(storedFoods));
+    temp();
+  }
+
+  function decreaseButtonClickHandler() {
+    onDecrease(name);
+    // dispatch(cartReducer.actions.UPDATE());
+    dispatch(discountReducer.actions.UPDATE(storedFoods));
+  }
 
   return (
     <>
     <div id={name}>{name}</div>
     <div id={name}>{price}</div>
-    <div onClick={() => onDelete(name)}>X</div>
-    <button type="button" onClick={() => onDecrease(name)}>-</button>
+    <div onClick={deleteButtonClickHandler}>X</div>
+    <button type="button" onClick={decreaseButtonClickHandler}>-</button>
     <span>{quantitiy}</span>
-    <button type="button" onClick={() => onIncrease(name)}>+</button>
+    <button type="button" onClick={increaseButtonClickHandler}>+</button>
     </>
   )
 }
