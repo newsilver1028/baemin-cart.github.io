@@ -12,9 +12,7 @@ export default function FoodsCategories() {
   });
 
   return (
-    <>
-    {$sortedFoodsArray}
-    </>
+    <>{$sortedFoodsArray}</>
   )
 }
 

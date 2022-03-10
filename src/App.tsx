@@ -1,5 +1,5 @@
 import { extendTheme, ChakraProvider } from '@chakra-ui/react';
-import Box from './Components/Box';
+import ContainerBox from './Components/ContainerBox';
 
 const colors = {
   brand: {
@@ -15,7 +15,7 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
     <div className="App">
-      <Box />
+      <ContainerBox />
     </div>
     </ChakraProvider>
   );

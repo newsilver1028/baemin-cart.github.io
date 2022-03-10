@@ -4,7 +4,7 @@ import { ReactElement } from "react"
 import { cartReducer } from '../Reducers/cartReducer';
 import { CartFoodProps } from "./CartList"
 
-import { Text } from '@chakra-ui/react';
+import { Text, Box, CloseButton } from '@chakra-ui/react';
 
 export default function CartFood(props: CartFoodProps): ReactElement {
   const {name, price, quantitiy } = props;
@@ -23,13 +23,19 @@ export default function CartFood(props: CartFoodProps): ReactElement {
   }
 
   return (
-    <>
-    <Text id={name} fontSize="lg" fontWeight="semibold">{name}</Text>
-    <Text id={name+"price"} as="sub" fontSize="md" color="darkgray">₩{price}</Text>
-    <div id={name} onClick={() => onDelete(name)}>X</div>
-    <button type="button" onClick={() => onDecrease(name)}>-</button>
-    <span>{quantitiy}</span>
-    <button type="button" onClick={() => onIncrease(name)}>+</button>
-    </>
+  <Box marginY="20px" display="flex" justifyContent="space-between" w="100%">
+    <Box w="80%">
+      <Text id={name} fontSize="lg" fontWeight="semibold">{name}</Text>
+      <Text id={name+"price"} as="sub" fontSize="md" color="darkgray">₩{price}</Text>
+    </Box>
+    <Box display="flex" w="10%" flexDirection="column">
+      <CloseButton color="lightgrey" onClick={() => onDelete(name)}/>
+      <Box>
+        <button type="button" onClick={() => onDecrease(name)}>-</button>
+        <span>{quantitiy}</span>
+        <button type="button" onClick={() => onIncrease(name)}>+</button>
+      </Box>
+    </Box>
+  </Box>
   )
 }

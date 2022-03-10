@@ -8,7 +8,8 @@ import { foodDataReducer } from '../Reducers/foodDataReducer';
 import { fetchFoodData } from '../Async/fetchFoodData';
 import { useAppThunkDispatch } from '..';
 
-import { Text } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
 export default function FoodsList() {
   const dispatch = useDispatch();
@@ -45,9 +46,14 @@ export default function FoodsList() {
   },[]);
 
   return (
-    <div>
-    <Text fontSize="2xl" fontWeight="semibold">{foodData.merchant_name}</Text>
-    <div>Cart {count}</div>
-    </div>
+    <Box 
+    display="flex" 
+    alignItems="baseline" 
+    justifyContent="space-between"
+    padding="10px"
+    bg="white">
+      <Heading as="h1" size="xl" bg="white">{foodData.merchant_name}</Heading>
+      <div>Cart {count}</div>
+    </Box>
   );
 }
