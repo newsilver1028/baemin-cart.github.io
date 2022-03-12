@@ -27,7 +27,6 @@ export default function DiscountMenu(props: {name: string, quantity: number, exc
   }
 
   useEffect(() => {
-    dispatch(discountReducer.actions.UPDATE(storedFoods));
     dispatch(discountReducer.actions.COMPUTE_PRICE());
   },[storedFoods])
   

@@ -10,7 +10,6 @@ import { discountReducer } from '../Reducers/discountReducer';
 
 import { Text } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
-import AlertDialogOverlapped from "./ui/AlertDialogOverlapped";
 
 export default function Food(props: FoodProps): ReactElement {
   const {name, price} = props;
@@ -26,13 +25,13 @@ export default function Food(props: FoodProps): ReactElement {
   const onUpdate = (storedFoods: StoredFoods[]) => {
     dispatch(discountReducer.actions.ADD(storedFoods));
     dispatch(discountReducer.actions.UPDATE(storedFoods));
+    dispatch(discountReducer.actions.COMPUTE_PRICE());
   }
 
   function addCartClickHandler(): any {
     const isOverlapped = storedFoods.filter((item: Items) => item.name === name).length !== 0;
     if (isOverlapped) {
-      // alert("이미 장바구니에 등록된 상품입니다.");
-      <AlertDialogOverlapped name={name} isOverlapped={isOverlapped}/>
+      alert("이미 장바구니에 등록된 상품입니다.");
       return;
     }
     onAdd(name);
@@ -43,7 +42,7 @@ export default function Food(props: FoodProps): ReactElement {
   },[storedFoods]);
   
   return (
-    <Box marginY="20px">
+    <Box marginY="20px" cursor="pointer">
       <Text id={name} fontSize="lg" fontWeight="semibold" onClick={addCartClickHandler}>{name}</Text>
       <Text id={name+"price"} fontSize="sm" color="darkgray">₩{price}</Text>
     </Box>
