@@ -4,6 +4,7 @@ import { ReactElement } from 'react';
 import { StoredFoods } from '../Interface/cartInterface';
 import { RootState } from '../Reducers';
 import CartFood from './CartFood';
+import { CartFoodProps } from '../Interface/cartInterface';
 
 import { Box } from '@chakra-ui/react';
 
@@ -12,8 +13,8 @@ export default function CartList() {
   const storedFoods = cartData.storedFoods;
 
   const $storedFoodsArray = storedFoods.map((food: StoredFoods): ReactElement<CartFoodProps> => {
-    const {name, price, quantitiy} = food;
-    return <CartFood key={name} name={name} price={price} quantitiy={quantitiy} />
+    const {name, price, quantity} = food;
+    return <CartFood key={name} name={name} price={price} quantity={quantity} />
   });
 
   return (
@@ -25,8 +26,4 @@ export default function CartList() {
   )
 }
 
-export interface CartFoodProps {
-  name: string;
-  price: number;
-  quantitiy: number;
-}
+

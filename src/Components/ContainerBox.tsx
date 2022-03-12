@@ -1,10 +1,20 @@
-import CartBox from './CartBox';
 import FoodsListBox from './FoodsListBox';
+import CartPageBox from './CartPageBox';
+import { OpenCartContext } from './Context/OpenCartContext';
 
-import { Box } from '@chakra-ui/react';
-import { Center, Square, Circle } from '@chakra-ui/react'
+import { Box, Center } from '@chakra-ui/react';
+import { useState } from 'react';
 
 export default function ContainerBox() {
+  const [isOpen, setIsopen] = useState<boolean>(false);
+  const onOpen = (): void => {
+    if (!isOpen) {
+      setIsopen(true);
+      return;
+    }
+    setIsopen(false);
+  };
+
   return (
     <>
     <Center>
@@ -16,9 +26,11 @@ export default function ContainerBox() {
       letterSpacing='wide'
       bg="gray.200"
       boxShadow="base">
-        <FoodsListBox />
-        <CartBox />
+        <OpenCartContext.Provider value={{isOpen, onOpen}}>
+        {isOpen ? <CartPageBox /> : <FoodsListBox />}
+        </OpenCartContext.Provider>
       </Box>
+
     </Center>
     </>
   )

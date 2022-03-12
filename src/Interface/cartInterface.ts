@@ -19,7 +19,7 @@ export interface CartData {
 
 export interface StoredFoods {
   name: string;
-  quantitiy: number;
+  quantity: number;
   price: number;
   priceTimesQuantity: number;
 }
@@ -36,4 +36,10 @@ export interface Discounts {
   id: string;
   name: string;
   discount_rate: number;
+}
+
+export interface CartFoodProps {
+  name: string;
+  price: number;
+  quantity: number;
 }

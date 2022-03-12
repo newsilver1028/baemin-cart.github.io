@@ -1,12 +1,14 @@
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { Discounts } from '../Interface/discountInterface';
 import { RootState } from '../Reducers';
+import { discountReducer } from '../Reducers/discountReducer';
 import DiscountsElement from './DiscountsElement';
 
-import { Text } from '@chakra-ui/react'
+import { Text, Box } from '@chakra-ui/react'
 
 export default function DiscountsList() {
+  const dispatch = useDispatch();
   const { foodData } = useSelector((store: RootState) => store.cartReducer);
   const discountsList = foodData.discounts;
   const $discountsArray = discountsList.map((discount: Discounts): JSX.Element => {
@@ -15,10 +17,10 @@ export default function DiscountsList() {
   });
 
   return (
-    <>
-    <Text fontSize="2xl"><b>할인</b></Text>
-    <div>{$discountsArray}</div>
-    </>
+    <Box padding="10px" marginY="20px" bg="white">
+      <Text fontSize="2xl" fontWeight="semibold">할인</Text>
+      <Box display="flex" flexDirection="column" marginY="20px">{$discountsArray}</Box>
+    </Box>
   )
 }
 

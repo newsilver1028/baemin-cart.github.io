@@ -41,7 +41,7 @@ export const cartReducer = createSlice({
       const target = state.foodData.items.filter((item: Items) => item.name === payload)[0];
       const targetObject = {
         name: target.name,
-        quantitiy: 1,
+        quantity: 1,
         price: target.price,
         priceTimesQuantity: target.price
       }
@@ -56,8 +56,8 @@ export const cartReducer = createSlice({
     INCREASE: (state, { payload }: PayloadAction<string>) => {
       state.cartData!.storedFoods = state.cartData!.storedFoods.map((food) => {
         if(food.name === payload) {
-          food.quantitiy++;
-          food.priceTimesQuantity = food.price * food.quantitiy;
+          food.quantity++;
+          food.priceTimesQuantity = food.price * food.quantity;
         }
         return food;
       });
@@ -65,8 +65,10 @@ export const cartReducer = createSlice({
     DECREASE: (state, { payload }: PayloadAction<string>) => {
       state.cartData!.storedFoods = state.cartData!.storedFoods.map((food) => {
         if(food.name === payload) {
-          food.quantitiy--;
-          food.priceTimesQuantity = food.price * food.quantitiy;
+          if(food.quantity > 1) {
+            food.quantity--;
+            food.priceTimesQuantity = food.price * food.quantity;
+          }
         }
         return food;
       });

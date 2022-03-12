@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { RootState } from '../Reducers';
 import { cartReducer } from '../Reducers/cartReducer';
@@ -8,10 +8,11 @@ import { foodDataReducer } from '../Reducers/foodDataReducer';
 import { fetchFoodData } from '../Async/fetchFoodData';
 import { useAppThunkDispatch } from '..';
 
-import { Heading } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
+import { Heading, Flex, Text, Badge, Box } from '@chakra-ui/react';
+import { OpenCartContext } from './Context/OpenCartContext';
 
 export default function FoodsList() {
+  const {isOpen, onOpen} = useContext(OpenCartContext);
   const dispatch = useDispatch();
   const thunkDispatch = useAppThunkDispatch();
   const { foodData } = useSelector((store: RootState) => store.foodDataReducer);
@@ -46,14 +47,18 @@ export default function FoodsList() {
   },[]);
 
   return (
-    <Box 
-    display="flex" 
-    alignItems="baseline" 
-    justifyContent="space-between"
-    padding="10px"
-    bg="white">
-      <Heading as="h1" size="xl" bg="white">{foodData.merchant_name}</Heading>
-      <div>Cart {count}</div>
+    <Box>
+      <Flex 
+      alignItems="baseline" 
+      justifyContent="space-between"
+      padding="10px"
+      bg="white">
+        <Heading as="h1" size="xl" bg="white">{foodData.merchant_name}</Heading>
+        <Flex alignItems="center" onClick={onOpen} cursor="pointer">
+          <Text fontSize="lg" fontWeight="bold">Cart</Text>
+          <Badge colorScheme="facebook" ml="1">{count}</Badge>
+        </Flex>
+      </Flex>
     </Box>
   );
 }

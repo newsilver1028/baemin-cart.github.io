@@ -1,33 +1,59 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from "react";
+import { RootState } from '../Reducers';
 import DiscountsMenu from "./DiscountsMenu";
 
-import { Text } from '@chakra-ui/react';
+import { Text, Box, Checkbox, Flex, Button } from '@chakra-ui/react';
+import { discountReducer } from '../Reducers/discountReducer';
 
 export default function DiscountsElement(props: {id:string, name: string, discountRate: number}) {
+  const { discounts } = useSelector((store: RootState) => store.discountReducer);
+  const dispatch = useDispatch();
   const {id, name, discountRate} = props;
   const [isOpen, setIsOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-  function selectButtonClickHandler(): void {
-    if(isOpen) {
-      setIsOpen(false);
+  const onSelect = (name: string): void => {
+    dispatch(discountReducer.actions.SELECT_DISCOUNTS(name));
+  }
+
+  const onCompute = () => {
+    dispatch(discountReducer.actions.COMPUTE_PRICE());
+  }
+
+  function discountCheckboxToggleHandler(event: any): void {
+    onSelect(name);
+    onCompute();
+    const checked = event.target.checked;
+    if(!checked) {
+      setIsChecked(false);
       return;
     }
-    setIsOpen(true);
+    setIsChecked(true); 
+  }
+
+  function selectButtonClickHandler(): void {
+    if(!isOpen) {
+      setIsOpen(true);
+      return;
+    }
+    setIsOpen(false);
   }
 
   return (
-    <>
-    <div id={id}>
-    <input type="checkbox" />
-    <Text fontSize="lg"><b>{name}</b></Text>
-    <Text as="sub" fontSize="sm" color="darkgray">{discountRate} %</Text>
-    <button type="button" 
-      value={name} 
-      onClick={selectButtonClickHandler}
-    >메뉴 선택</button>
-    </div>
-    {/* {isOpen && <DiscountsMenu id={id} name={name}/>} */}
-    <DiscountsMenu id={id} name={name}/>
-    </>
+    <Box>
+      <Flex justifyContent="space-between" marginY="10px">
+        <Flex alignItems="center">
+          <Checkbox id={name} isChecked={isChecked} onChange={discountCheckboxToggleHandler}>
+          <Box marginX="15px">
+            <Text fontSize="lg" fontWeight="semibold">{name}</Text>
+            <Text as="sub" fontSize="sm" color="darkgray">{discountRate} %</Text>
+          </Box>
+          </Checkbox>
+        </Flex>
+        <Button onClick={selectButtonClickHandler}>메뉴 선택</Button>
+      </Flex>
+      {isOpen && <DiscountsMenu id={id} name={name}/>}
+    </Box>
   )
 }
