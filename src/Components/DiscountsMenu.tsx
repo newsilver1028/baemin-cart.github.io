@@ -5,6 +5,8 @@ import { Discounts } from '../Interface/discountInterface';
 
 import DiscountMenu from './DiscountMenu';
 
+import { Text, Box, Checkbox, Flex, Button } from '@chakra-ui/react';
+
 export default function DiscountsMenu(props: { id: string; name: string }) {
   const { discounts } = useSelector((store: RootState) => store.discountReducer);
   const { name } = props;
@@ -19,6 +21,8 @@ export default function DiscountsMenu(props: { id: string; name: string }) {
   })
 
   return (
-    <div>{$discountedList}</div>
+    <Box bg="white">
+      {$discountedList}
+    </Box>
   )  
 }

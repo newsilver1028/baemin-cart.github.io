@@ -1,17 +1,20 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState } from "react";
-import { RootState } from '../Reducers';
 import DiscountsMenu from "./DiscountsMenu";
-
-import { Text, Box, Checkbox, Flex, Button } from '@chakra-ui/react';
 import { discountReducer } from '../Reducers/discountReducer';
 
+import { Text, Box, Checkbox, Flex, Button, useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+} from '@chakra-ui/react';
+
 export default function DiscountsElement(props: {id:string, name: string, discountRate: number}) {
-  const { discounts } = useSelector((store: RootState) => store.discountReducer);
   const dispatch = useDispatch();
   const {id, name, discountRate} = props;
-  const [isOpen, setIsOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const {isOpen, onOpen, onClose} = useDisclosure();
 
   const onSelect = (name: string): void => {
     dispatch(discountReducer.actions.SELECT_DISCOUNTS(name));
@@ -32,14 +35,6 @@ export default function DiscountsElement(props: {id:string, name: string, discou
     setIsChecked(true); 
   }
 
-  function selectButtonClickHandler(): void {
-    if(!isOpen) {
-      setIsOpen(true);
-      return;
-    }
-    setIsOpen(false);
-  }
-
   return (
     <Box>
       <Flex justifyContent="space-between" marginY="10px">
@@ -51,9 +46,17 @@ export default function DiscountsElement(props: {id:string, name: string, discou
           </Box>
           </Checkbox>
         </Flex>
-        <Button onClick={selectButtonClickHandler}>메뉴 선택</Button>
+        <Button onClick={onOpen}>메뉴 선택</Button>
       </Flex>
-      {isOpen && <DiscountsMenu id={id} name={name}/>}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent w="367px" h="400px">
+          <Box bg="white" borderRadius="10px" p="10px">
+            <ModalCloseButton />
+            <DiscountsMenu id={id} name={name}/>
+          </Box>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }
