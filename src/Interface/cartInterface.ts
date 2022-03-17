@@ -1,27 +1,8 @@
-export interface Data {
-  foodData: FoodData;
-  count?: number;
-  cartData?: CartData;
-}
-
 export interface FoodData {
   minimum_order_price: number;
   merchant_name: string;
   items: Items[];
   discounts: Discounts[];
-}
-
-export interface CartData {
-  storedFoods: StoredFoods[],
-  totalPrice?: number;
-  isOverMinimum?: boolean;
-}
-
-export interface StoredFoods {
-  name: string;
-  quantity: number;
-  price: number;
-  priceTimesQuantity: number;
 }
 
 export interface Items {
@@ -36,6 +17,13 @@ export interface Discounts {
   id: string;
   name: string;
   discount_rate: number;
+  discountedFoodList?: DiscountedFoodList[];
+}
+
+export interface DiscountedFoodList {
+  name: string;
+  priceTimesQuantity: number;
+  excludedPrices: number;
 }
 
 export interface CartFoodProps {

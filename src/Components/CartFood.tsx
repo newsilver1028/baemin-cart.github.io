@@ -2,35 +2,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReactElement, useEffect } from "react"
 
 import { RootState } from '../Reducers';
-import { cartReducer } from '../Reducers/cartReducer';
 import { CartFoodProps } from "../Interface/cartInterface";
-import { discountReducer } from '../Reducers/discountReducer';
 
 import { Text, Box, CloseButton, ButtonGroup, Button, IconButton } from '@chakra-ui/react';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
+import { foodDataReducer } from '../Reducers/foodDataReducer';
 
 export default function CartFood(props: CartFoodProps): ReactElement {
-  const { cartData } = useSelector((store: RootState) => store.cartReducer);
-  const storedFoods = cartData.storedFoods;
+  const { foodInCart } = useSelector((store: RootState) => store.foodDataReducer);
+  const foodList = foodInCart.foodList;
   const {name, price, quantity } = props;
   const dispatch = useDispatch();
 
   const onIncrease = (target: string): void => {
-    dispatch(cartReducer.actions.INCREASE(target));
+    dispatch(foodDataReducer.actions.increaseFoodQuantity(target));
   } 
 
   const onDecrease = (target: string): void => {
-    dispatch(cartReducer.actions.DECREASE(target));
+    dispatch(foodDataReducer.actions.decreaseFoodQuantity(target));
   }
 
   const onDelete = (target: string): void => {
-    dispatch(cartReducer.actions.DELETE(target));
+    dispatch(foodDataReducer.actions.deleteFoodInCart(target));
   }
 
-  useEffect(() => {
-    dispatch(discountReducer.actions.UPDATE(storedFoods));
-    dispatch(discountReducer.actions.COMPUTE_PRICE());
-  },[]);
+  // useEffect(() => {
+  //   dispatch(foodDataReducer.actions.updateTotalPrice());
+  // },[foodList]);
+
 
   return (
   <Box marginY="20px" display="flex" justifyContent="space-between" w="100%">

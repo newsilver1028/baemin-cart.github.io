@@ -12,24 +12,26 @@ import { Heading, Flex, Text, Badge, Box } from '@chakra-ui/react';
 import { OpenCartContext } from './Context/OpenCartContext';
 
 export default function FoodsList() {
-  const {isOpen, onOpen} = useContext(OpenCartContext);
   const dispatch = useDispatch();
   const thunkDispatch = useAppThunkDispatch();
-  const { foodData } = useSelector((store: RootState) => store.foodDataReducer);
-  const { count } = useSelector((store: RootState) => store.cartReducer);
+  const {isOpen, onOpen} = useContext(OpenCartContext);
+  const { foodData, foodInCart } = useSelector((store: RootState) => store.foodDataReducer);
+  const count = foodInCart.count;
 
   const getFoodData = () => {
     thunkDispatch(fetchFoodData())
     .unwrap()
     .then((data) => {
+      // 주석 처리
       dispatch(cartReducer.actions.STORE(data));
-      dispatch(foodDataReducer.actions.STORE());
+      dispatch(foodDataReducer.actions.sortFoodData());
     })
     .catch((reject) => {
       console.log(reject);
     })
   }
 
+  // 주석 처리
   const getDiscountsData = () => {
     thunkDispatch(fetchFoodData())
     .unwrap()
@@ -42,6 +44,7 @@ export default function FoodsList() {
   }
 
   useEffect(()=> {
+    // 주석 처리
     getDiscountsData();
     getFoodData();
   },[]);
