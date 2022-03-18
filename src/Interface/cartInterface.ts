@@ -18,12 +18,15 @@ export interface Discounts {
   name: string;
   discount_rate: number;
   discountedFoodList?: DiscountedFoodList[];
+  isSelected?: boolean;
+  excludedPrices?: number;
 }
 
 export interface DiscountedFoodList {
   name: string;
   priceTimesQuantity: number;
   excludedPrices: number;
+  isSelected: boolean;
 }
 
 export interface CartFoodProps {

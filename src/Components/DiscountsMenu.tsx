@@ -6,17 +6,21 @@ import { Discounts } from '../Interface/discountInterface';
 import DiscountMenu from './DiscountMenu';
 
 import { Box } from '@chakra-ui/react';
-import { DiscountedFoodList } from '../Interface/cartInterface';
+import { DiscountedFood } from '../Interface/discountInterface';
 
-export default function DiscountsMenu(props: { id: string; name: string }) {
-  const { name } = props;
+export default function DiscountsMenu(props: { id: string; discountName: string }) {
+  const { discountName } = props;
   const { foodData } = useSelector((store: RootState) => store.foodDataReducer);
-  const discounts = foodData.discounts.filter((discount: Discounts) => discount.name === name)[0];
-  const discountedFood = discounts.discountedFood;
-  const $discountedList = discountedFood.map((food: DiscountedFoodList) => {
-    const {name, priceTimesQuantity, excludedPrices } = food;
+  const discounts = foodData.discounts.filter((discount: Discounts) => discount.name === discountName)[0];
+  const discountedFood = discounts.discountedFoodList;
+  const $discountedList = discountedFood.map((food: DiscountedFood) => {
+    const {name, pricesTimesQuantity, excludedPrices } = food;
     return (
-      <DiscountMenu key={name} name={name} priceTimesQuantity={priceTimesQuantity} excludedPrices={excludedPrices} />
+      <DiscountMenu key={name} 
+      name={name} 
+      discountName={discountName} 
+      pricesTimesQuantity={pricesTimesQuantity} 
+      excludedPrices={excludedPrices} />
     );
   })
 

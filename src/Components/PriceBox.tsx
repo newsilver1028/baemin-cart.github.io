@@ -5,8 +5,8 @@ import { RootState } from '../Reducers';
 import { Text, Flex, Box } from '@chakra-ui/react';
 
 export default function PriceBox() {
-  const { totalPrices } = useSelector((store: RootState) => store.discountReducer);
-
+  const { foodInCart } = useSelector((store: RootState) => store.foodDataReducer);
+  const totalPrices = foodInCart.totalPrice;
   return (
     <Box bg="white" padding="10px">
     <Flex justifyContent="space-between" marginX="10px">

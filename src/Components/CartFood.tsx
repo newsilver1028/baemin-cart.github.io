@@ -26,9 +26,9 @@ export default function CartFood(props: CartFoodProps): ReactElement {
     dispatch(foodDataReducer.actions.deleteFoodInCart(target));
   }
 
-  // useEffect(() => {
-  //   dispatch(foodDataReducer.actions.updateTotalPrice());
-  // },[foodList]);
+  useEffect(() => {
+    dispatch(foodDataReducer.actions.updateTotalPrice());
+  },[foodList]);
 
 
   return (

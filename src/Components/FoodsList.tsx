@@ -2,8 +2,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useContext, useEffect } from 'react';
 
 import { RootState } from '../Reducers';
-import { cartReducer } from '../Reducers/cartReducer';
-import { discountReducer } from '../Reducers/discountReducer';
 import { foodDataReducer } from '../Reducers/foodDataReducer';
 import { fetchFoodData } from '../Async/fetchFoodData';
 import { useAppThunkDispatch } from '..';
@@ -21,9 +19,7 @@ export default function FoodsList() {
   const getFoodData = () => {
     thunkDispatch(fetchFoodData())
     .unwrap()
-    .then((data) => {
-      // 주석 처리
-      dispatch(cartReducer.actions.STORE(data));
+    .then(() => {
       dispatch(foodDataReducer.actions.sortFoodData());
     })
     .catch((reject) => {
@@ -31,21 +27,7 @@ export default function FoodsList() {
     })
   }
 
-  // 주석 처리
-  const getDiscountsData = () => {
-    thunkDispatch(fetchFoodData())
-    .unwrap()
-    .then((data) => {
-      dispatch(discountReducer.actions.STORE(data));
-    })
-    .catch((reject) => {
-      console.log(reject);
-    })
-  }
-
   useEffect(()=> {
-    // 주석 처리
-    getDiscountsData();
     getFoodData();
   },[]);
 

@@ -39,11 +39,21 @@ export const foodDataReducer = createSlice({
           foodList: FOODS_LIST
         }
       });
+      state.foodData.discounts.map((discount: Discounts): Discounts => {
+        discount.isSelected = true;
+        discount.excludedPrices = 0;
+        return discount;
+      })
     },
     updateTotalPrice: (state) => {
-      state.foodInCart!.totalPrice = state.foodInCart!.foodList.reduce(
+      const originalPrice = state.foodInCart!.foodList.reduce(
         (prev: number, current: FoodList) => prev + current.priceTimesQuantity,0);
-      state.isOverMinimum = state.foodData.minimum_order_price <= state.foodInCart!.totalPrice;
+      state.foodData.discounts.forEach((discount) => {
+        if(discount.isSelected) {
+          state.foodInCart!.totalPrice = originalPrice - discount.excludedPrices!; 
+        }
+      })
+      state.isOverMinimum = state.foodData.minimum_order_price <= originalPrice;
     },
     addFoodInCart: (state, { payload }: PayloadAction<string>) => {
       const target = state.foodData.items.filter((item: Items) => item.name === payload)[0];
@@ -62,6 +72,7 @@ export const foodDataReducer = createSlice({
             name: food.name,
             priceTimesQuantity: food.priceTimesQuantity,
             excludedPrices: excludedPrices,
+            isSelected: true
           }
         });
         discount.discountedFoodList = foodListElements;
@@ -91,7 +102,32 @@ export const foodDataReducer = createSlice({
         }
         return food;
       });
-    }
+    },
+    selectDiscounts: (state, { payload }: PayloadAction<string>) => {
+      state.foodData.discounts.map((discount) => {
+        if(discount.name === payload) {
+          discount.isSelected = !discount.isSelected;
+        }
+        return discount;
+      });
+    },
+    selectFoodsForDiscount: (state, { payload }: PayloadAction<[string,string]>) => {
+      const [dicountName, name] = payload;
+      state.foodData.discounts.map((discount) => {
+        if(discount.name === dicountName) {
+          discount.discountedFoodList!.map((food) => {
+            if(food.name === name) {
+              food.isSelected = !food.isSelected;
+            }
+            if(food.isSelected) {
+              discount.excludedPrices! -= food.excludedPrices;
+            }
+            return food;
+          })
+        }
+        return discount;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchFoodData.pending, (state) => {
