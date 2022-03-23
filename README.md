@@ -1,4 +1,6 @@
 # 배민 장바구니 만들기
+https://user-images.githubusercontent.com/79626675/159734637-7af6229e-4f97-46f3-b9c4-b0b62b08a34b.mov
+
 
 ## 페이지
 
